@@ -53,6 +53,12 @@ class Manager
 	protected $js_dir = 'js';
 
 	/**
+	 * Public address to better utilize coockieless domain
+	 * @var string
+	 */
+	protected $static = '';
+
+	/**
 	 * Directory for local package assets.
 	 * Relative to your public directory ('public_dir').
 	 * No trailing slash!.
@@ -151,7 +157,7 @@ class Manager
 				$this->$option = $config[$option];
 
 		// Set common options
-		foreach(array('public_dir', 'css_dir', 'js_dir', 'packages_dir', 'pipeline',  'pipeline_dir', 'pipeline_gzip') as $option)
+		foreach(array('public_dir', 'css_dir', 'js_dir', 'packages_dir', 'pipeline',  'pipeline_dir', 'pipeline_gzip', 'static') as $option)
 			if(isset($config[$option]))
 				$this->$option = $config[$option];
 
@@ -299,7 +305,7 @@ class Manager
 		// Build tags
 		$output = '';
 		foreach($assets as $asset)
-			$output .= '<link href="' . $asset . '"' . $attributes . " />\n";
+			$output .= '<link href="' . $this->static . $asset . '"' . $attributes . " />\n";
 
 		return $output;
 	}
@@ -336,7 +342,7 @@ class Manager
 		// Build tags
 		$output = '';
 		foreach($assets as $asset)
-			$output .= '<script src="' . $asset . '"' . $attributes . "></script>\n";
+			$output .= '<script src="' .  $this->static . $asset . '"' . $attributes . "></script>\n";
 
 		return $output;
 	}
